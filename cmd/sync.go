@@ -84,7 +84,7 @@ Examples:
 		}
 		defer closeFile(tmpfile)
 	}
-
+	log.Infof("sync: master.Addr = %q, master.Auth = %q\n", master.Addr, master.Auth)
 	master.Conn = openConn(master.Addr, master.Auth)
 	defer master.Close()
 	master.rd = rBuilder(master.Conn).

@@ -5,6 +5,20 @@ redis-port
 
 parse redis rdb file, sync data between redis master and slave
 
+解决使用 redis-port 工具全量同步，源或目标认证密码中包含特殊字符报错，无法同步的问题。
+
+编译二进制方法(也可直接下载 binary 目录下的二进制文件)：
+```azure
+git clone https://github.com/avyou/redis-port.git
+cd redis-port
+git submodule init
+git submodule update
+go mod init
+go mod tidy
+go mod vendor
+make
+```
+
 * **DECODE** dumped payload to human readable format (hex-encoding)
 
 ```sh

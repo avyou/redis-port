@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net"
-	"net/url"
+	// "net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -26,6 +26,10 @@ import (
 )
 
 func redisParsePath(path string) (addr, auth string) {
+	//log.Infof("** redisParsePath = %q,redisParseAuth = %q\n", path, auth)
+	var redishost string
+	var redispass string
+
 	var abspath = func() string {
 		if strings.HasPrefix(path, "//") {
 			return path
@@ -33,15 +37,28 @@ func redisParsePath(path string) (addr, auth string) {
 			return "//" + path
 		}
 	}()
-	u, err := url.Parse(abspath)
-	if err != nil {
-		log.PanicErrorf(err, "invalid redis address %q", path)
-	}
-	if u.User != nil {
-		return u.Host, u.User.String()
+	log.Infof("===k> abspath = %q\n", abspath)
+	/*	u, err := url.Parse(abspath)
+		if err != nil {
+			log.PanicErrorf(err, "invalid redis address %q", path)
+		}*/
+	lastInd := strings.LastIndex(abspath, "@")
+	firstInd := strings.IndexAny(abspath, "//")
+	if lastInd == -1 {
+		redishost = abspath[firstInd+2:]
 	} else {
-		return u.Host, ""
+		redishost = abspath[lastInd+1:]
+		redispass = abspath[firstInd+2:lastInd]
 	}
+	// log.Infof("===>parse u info: %q\n", u)
+	log.Infof("===>Redis Host = %q, Redis password = %q, \n", redishost, redispass)
+	/*	if u.User != nil {
+			return u.Host, u.User.String()
+		} else {
+			return newHost, ""
+		}*/
+	return redishost, redispass
+
 }
 
 func redisNewCommand(cmd string, args ...interface{}) *redis.Resp {
