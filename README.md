@@ -5,6 +5,8 @@ redis-port
 
 parse redis rdb file, sync data between redis master and slave
 
+Fork from: [https://github.com/CodisLabs/redis-port](https://github.com/CodisLabs/redis-port)
+
 解决使用 redis-port 工具全量同步，源或目标认证密码中包含特殊字符报错，无法同步的问题。
 
 编译二进制方法(也可直接下载 binary 目录下的二进制文件)：
