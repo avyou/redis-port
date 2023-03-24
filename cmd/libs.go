@@ -37,7 +37,7 @@ func redisParsePath(path string) (addr, auth string) {
 			return "//" + path
 		}
 	}()
-	log.Infof("===k> abspath = %q\n", abspath)
+	log.Infof("===> abspath = %q\n", abspath)
 	/*	u, err := url.Parse(abspath)
 		if err != nil {
 			log.PanicErrorf(err, "invalid redis address %q", path)
